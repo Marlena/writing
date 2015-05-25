@@ -1,0 +1,25 @@
+<div class="panel panel-default">
+
+  <table class="table">
+    <thead>
+    <th>Title</th>
+    <th>Content</th>
+    </thead>
+    <tbody>
+    <% @notes.each do |note| %>
+      <tr>
+        <td>
+          <%= note.title %>
+        </td>
+        <td>
+          <%= note.content %>
+        </td>
+      </tr>
+
+    <% end %>
+
+    </tbody>
+
+  </table>
+
+</div>
