@@ -48,7 +48,7 @@ RSpec.describe NotesController, type: :controller do
       it 'assigns the new note' do
         expect(assigns[:note]).to be_new_record
       end
-\
+
       it 'renders the new template' do
         expect(controller).to have_rendered :new
       end
@@ -85,5 +85,26 @@ RSpec.describe NotesController, type: :controller do
       n = assigns[:notes]
       expect(n).to eq([first_note, second_note])
     end
+  end
+
+  describe '#delete' do
+    let!(:first_note){
+      Note.create! title: 'first note'
+    }
+    let!(:second_note){
+      Note.create! title: 'second note'
+    }
+
+    it 'redirects to the index' do
+      delete :destroy, id: first_note.id
+      expect(redirect_to notes_path)
+    end
+
+    it 'decreases the count of notes by 1' do
+      expect(Note.count).to eq(2)
+      delete :destroy, id: first_note.id
+      expect(Note.count).to eq(1)
+    end
+
   end
 end
