@@ -16,6 +16,9 @@
           <%= note.content %>
         </td>
         <td>
+          <%= link_to 'Edit', edit_note_path(note) %>
+        </td>
+        <td>
           <%= link_to 'Delete', note, method: :delete %>
         </td>
       </tr>

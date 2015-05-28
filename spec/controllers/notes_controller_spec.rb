@@ -106,5 +106,34 @@ RSpec.describe NotesController, type: :controller do
       expect(Note.count).to eq(1)
     end
 
+    it 'destroys the note' do
+      delete :destroy, id: first_note.id
+      expect{Note.find first_note.id}.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
   end
+
+  describe '#edit' do
+    let!(:note) {
+      Note.create! title: 'some title'
+    }
+
+    before do
+      get :edit, id: note.id
+    end
+
+    it 'works' do
+      expect(response).to be_success
+    end
+
+    it 'shows the note to be edited' do
+      n = assigns[:note]
+      expect(n).to be_present
+      expect(n).to be_a(Note)
+      expect(n).to eq(note)
+    end
+  end
+
+
+
 end
