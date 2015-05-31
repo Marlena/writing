@@ -28,6 +28,12 @@ class NotesController < ApplicationController
     @note = Note.find(params[:id])
   end
 
+  def update
+    @note = Note.find(params[:id])
+    @note.update_attributes(note_params)
+    redirect_to notes_path
+  end
+
   private
   def note_params
     params.require(:note).permit(:title, :content)

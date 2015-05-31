@@ -134,6 +134,35 @@ RSpec.describe NotesController, type: :controller do
     end
   end
 
+  describe '#update' do
+
+    let!(:note) {
+      Note.create! title: 'some title'
+    }
+    before do
+      put :update, id: note.id, note: {title:"new title"}
+    end
+
+    it 'locates the requested @note' do
+      expect(assigns[:note]).to eq(note)
+    end
+
+    it 'has a note' do
+      n = assigns[:note]
+      expect(n).to be_present
+      expect(n).to be_a(Note)
+      expect(n).to eq(note)
+    end
+
+    it 'redirects to index' do
+      expect(response).to redirect_to notes_path
+    end
+
+    it 'change the note content' do
+      expect(Note.find(note.id).title).to eq('new title')
+    end
+  end
+
 
 
 end

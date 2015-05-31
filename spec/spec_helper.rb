@@ -40,6 +40,24 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
+  #database cleaner configuration
+  #added because of a locked db in tests
+  #found this about it: http://stackoverflow.com/questions/15307742/integration-test-error-with-capybara-for-ajax-call-with-rails-3-2-12
+  RSpec.configure do |config|
+
+    config.before(:suite) do
+      DatabaseCleaner.strategy = :transaction
+      DatabaseCleaner.clean_with(:truncation)
+    end
+
+    config.around(:each) do |example|
+      DatabaseCleaner.cleaning do
+        example.run
+      end
+    end
+
+  end
+
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin
